@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifndef DEFAULT_SIZE
 #define DEFAULT_SIZE 13
+#endif
 
 /**
  * Function to encode the given input string

@@ -85,7 +85,7 @@ char * decode(char * _string) {
 	}
 	
 	
-	
+	free(decoded_str);
 	return original_str;
 }
 

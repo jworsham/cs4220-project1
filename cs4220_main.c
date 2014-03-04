@@ -3,7 +3,14 @@
 #include "decoder.c"
 
 /**
- * Entry point for CS4220 Project 1
+ * Entry point for CS4220 Project 1.
+ 
+ * @arg 	This code takes one argument: a path to a text file
+ * 			containing a single byte string.
+ *
+ * @author	Jessop, 	Thomas
+ * @author	Rawlins, 	Matthew
+ * @author	Worsham,	James
  */
 int main(int argc, char * argv[]) {
 	// Sanitize input
@@ -15,6 +22,16 @@ int main(int argc, char * argv[]) {
 	// Get the data and encode / decode it
 	char * file_path = argv[1];
 	char * original_data = readf(file_path);
+	
+	// Sanitize the input to ensure we have byte string data
+	char sanitized = sanitize_input(original_data);
+	if (sanitized != '0') {
+		printf("\n[ERROR]\tNon binary data found in input string: '%c'", sanitized);
+		free(original_data);
+		return -1;
+	}
+	
+	// Now encode and decode data
 	char * encoded_data = encode(original_data);
 	char * decoded_data;
 
@@ -30,12 +47,10 @@ int main(int argc, char * argv[]) {
 	getchar();
 
 	// Logic to determine if changes are needed
-	char * word = malloc(13);
 	if (ans == 'Y' || ans == 'y') {
 		printf("\tNew encoded value: ");
-		fgets(word, 13, stdin);
-		word[12] = 0;
-		encoded_data = word;
+		fgets(encoded_data, 13, stdin);
+		encoded_data[12] = 0;
 	}
 
 	// Now get the decoded data
@@ -43,10 +58,9 @@ int main(int argc, char * argv[]) {
 	printf("\tDecoded data: \t%s\n", decoded_data);
 
 	// Free up allocated memory
-	/*free(original_data);
+	free(original_data);
 	free(encoded_data);
 	free(decoded_data);
-	free(word);*/
 
 	return 0;
 }
